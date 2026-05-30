@@ -1,7 +1,9 @@
 import bcrypt from 'bcryptjs'
 import { PrismaClient } from '../src/generated/prisma/client'
+import { PrismaMariaDb } from '@prisma/adapter-mariadb'
 
-const prisma = new PrismaClient()
+const adapter = new PrismaMariaDb(process.env.DATABASE_URL!)
+const prisma = new PrismaClient({ adapter })
 
 async function main() {
   const hashedPassword = await bcrypt.hash('admin123', 12)

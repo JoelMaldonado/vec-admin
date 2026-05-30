@@ -25,7 +25,7 @@ export type Role = 'ADMIN' | 'EDITOR' | 'VIEWER'
 declare module 'next-auth' {
   interface Session {
     user: {
-      id: number
+      id: string
       dni: string
       name: string
       role: Role
@@ -33,10 +33,3 @@ declare module 'next-auth' {
   }
 }
 
-declare module '@auth/core/jwt' {
-  interface JWT {
-    id: number
-    dni: string
-    role: Role
-  }
-}

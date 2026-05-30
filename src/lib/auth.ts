@@ -2,9 +2,10 @@ import NextAuth from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 import bcrypt from 'bcryptjs'
 import { prisma } from '@/lib/prisma'
-import type { NextAuthConfig } from 'next-auth'
+import { authConfig } from './auth.config'
 
-export const authConfig: NextAuthConfig = {
+export const { handlers, auth, signIn, signOut } = NextAuth({
+  ...authConfig,
   providers: [
     Credentials({
       credentials: {
@@ -33,41 +34,27 @@ export const authConfig: NextAuthConfig = {
       },
     }),
   ],
-  session: { strategy: 'jwt' },
-  pages: { signIn: '/login' },
   callbacks: {
+    ...authConfig.callbacks,
     async jwt({ token, user }) {
       if (user) {
         token.id = Number(user.id)
-        token.dni = (user as any).dni
-        token.role = (user as any).role
+        token.dni = (user as { dni: string }).dni
+        token.role = (user as { role: string }).role
         token.name = user.name
       }
       return token
     },
     async session({ session, token }) {
-      session.user.id = token.id as number
-      session.user.dni = token.dni as string
-      session.user.role = token.role as any
-      session.user.name = token.name as string
-      return session
-    },
-    authorized({ auth, request }) {
-      const isLoggedIn = !!auth?.user
-      const { pathname } = request.nextUrl
-
-      const protectedPrefixes = ['/dashboard', '/members', '/events', '/finances', '/reports']
-      const isProtected = protectedPrefixes.some((p) => pathname.startsWith(p))
-
-      if (isProtected) return isLoggedIn
-
-      if (pathname === '/login' && isLoggedIn) {
-        return Response.redirect(new URL('/dashboard', request.nextUrl))
+      return {
+        ...session,
+        user: {
+          id: String(token.id),
+          dni: token.dni as string,
+          role: token.role as string,
+          name: (token.name ?? '') as string,
+        },
       }
-
-      return true
     },
   },
-}
-
-export const { handlers, auth, signIn, signOut } = NextAuth(authConfig)
+})

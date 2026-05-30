@@ -6,7 +6,8 @@
       "Bash(pnpm prisma *)",
       "Bash(pnpm list *)",
       "Bash(node -e \"const {defineConfig} = require\\('./node_modules/prisma/config'\\); console.log\\(Object.keys\\(defineConfig.toString\\(\\)\\)\\)\")",
-      "Bash(node -e \"const c = require\\('./node_modules/prisma/config.js'\\); console.log\\(typeof c.defineConfig\\); const result = c.defineConfig\\({ schema: 'test', seed: 'tsx seed.ts' }\\); console.log\\(JSON.stringify\\(result\\)\\)\")"
+      "Bash(node -e \"const c = require\\('./node_modules/prisma/config.js'\\); console.log\\(typeof c.defineConfig\\); const result = c.defineConfig\\({ schema: 'test', seed: 'tsx seed.ts' }\\); console.log\\(JSON.stringify\\(result\\)\\)\")",
+      "Bash(pnpm next *)"
     ]
   }
 }
