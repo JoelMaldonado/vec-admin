@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Member {
+  id            Int       @id @default(autoincrement())
+  firstName     String
+  lastName      String
+  dni           String    @unique
+  phone         String?
+  address       String?
+  district      String?
+  birthDate     DateTime?
+  maritalStatus String?
+  gender        String
+  familyGroup   String?
+  isBaptized    Boolean   @default(false)
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
