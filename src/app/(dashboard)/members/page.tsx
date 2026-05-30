@@ -1,11 +1,38 @@
-import { MOCK_MEMBERS, getMemberStats } from '@/features/members/data/mock-members'
+import { prisma } from '@/lib/prisma'
 import { MemberStatsCards } from '@/features/members/components/member-stats'
 import { MembersView } from './_components/members-view'
 import { Plus } from 'lucide-react'
 import Link from 'next/link'
 
-export default function MembersPage() {
-  const stats = getMemberStats()
+export default async function MembersPage() {
+  const members = await prisma.member.findMany({
+    orderBy: { firstName: 'asc' },
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      dni: true,
+      phone: true,
+      address: true,
+      district: true,
+      birthDate: true,
+      maritalStatus: true,
+      gender: true,
+      familyGroup: true,
+      isBaptized: true,
+      isActive: true,
+      createdAt: true,
+    },
+  })
+
+  const total = members.length
+  const active = members.filter((m) => m.isActive).length
+  const baptized = members.filter((m) => m.isBaptized).length
+  const familyGroups = new Set(
+    members.map((m) => m.familyGroup).filter(Boolean),
+  ).size
+
+  const stats = { total, active, baptized, familyGroups }
 
   return (
     <div className="space-y-5">
@@ -27,7 +54,7 @@ export default function MembersPage() {
 
       <MemberStatsCards stats={stats} />
 
-      <MembersView members={MOCK_MEMBERS} />
+      <MembersView members={members} />
     </div>
   )
 }

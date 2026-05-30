@@ -1,5 +1,16 @@
 'use client'
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
 import { cn } from '@/lib/utils'
 import {
   BarChart2,
@@ -10,6 +21,7 @@ import {
   Users,
   X,
 } from 'lucide-react'
+import { signOut } from 'next-auth/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -105,10 +117,31 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
 
         {/* Logout */}
         <div className="shrink-0 border-t border-slate-800 p-3">
-          <button className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-400 transition-colors hover:bg-slate-800 hover:text-slate-100">
-            <LogOut className="h-4 w-4 shrink-0" />
-            Cerrar sesión
-          </button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <button className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-400 transition-colors hover:bg-red-500/10 hover:text-red-400">
+                <LogOut className="h-4 w-4 shrink-0" />
+                Cerrar sesión
+              </button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-red-100">
+                  <LogOut className="h-5 w-5 text-red-500" />
+                </div>
+                <AlertDialogTitle>¿Cerrar sesión?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Se cerrará tu sesión activa. Tendrás que volver a iniciar sesión para acceder al sistema.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                <AlertDialogAction onClick={() => signOut({ redirectTo: '/login' })}>
+                  Cerrar sesión
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </aside>
     </>

@@ -1,4 +1,4 @@
-import { getMemberById } from '@/features/members/data/mock-members'
+import { prisma } from '@/lib/prisma'
 import { ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -10,7 +10,25 @@ export default async function EditMemberPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const member = getMemberById(Number(id))
+  const member = await prisma.member.findUnique({
+    where: { id: Number(id) },
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      dni: true,
+      phone: true,
+      address: true,
+      district: true,
+      birthDate: true,
+      maritalStatus: true,
+      gender: true,
+      familyGroup: true,
+      isBaptized: true,
+      isActive: true,
+      createdAt: true,
+    },
+  })
 
   if (!member) notFound()
 
