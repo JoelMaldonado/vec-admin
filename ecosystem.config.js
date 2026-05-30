@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: 'vec-admin',
-      script: 'node_modules/.bin/next',
+      script: 'node_modules/next/dist/bin/next',
       args: 'start',
       cwd: '/var/www/vec-admin',
       exec_mode: 'fork',
