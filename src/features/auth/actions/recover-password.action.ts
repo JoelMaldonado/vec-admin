@@ -2,7 +2,6 @@
 
 import bcrypt from 'bcryptjs'
 import { prisma } from '@/lib/prisma'
-import { sendPasswordResetEmail } from '@/lib/email'
 import { dniSchema, codeSchema, newPasswordSchema } from '../schemas/recover-password.schema'
 
 type ActionResult = { success: boolean; error?: string }
@@ -36,14 +35,6 @@ export async function requestPasswordReset(dni: string): Promise<ActionResult> {
   await prisma.passwordResetToken.create({
     data: { dni, token: code, expiresAt },
   })
-
-  if (user.email) {
-    try {
-      await sendPasswordResetEmail(user.email, user.name, code)
-    } catch {
-      // Log silently — don't expose email errors to the client
-    }
-  }
 
   return { success: true }
 }

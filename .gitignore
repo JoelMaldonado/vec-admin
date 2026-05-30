@@ -30,8 +30,10 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# env files — nunca subir al repo
+.env
+.env.*
+!.env.example
 
 # vercel
 .vercel
@@ -40,4 +42,12 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# prisma — cliente generado, se regenera en el build
 /src/generated/prisma
+
+# IDEs
+.vscode/
+.idea/
+
+# PM2
+ecosystem.config.js
