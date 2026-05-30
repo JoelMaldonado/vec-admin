@@ -19,3 +19,24 @@ export type Member = {
 export type CreateMemberInput = Omit<Member, 'id' | 'createdAt' | 'updatedAt'>
 
 export type UpdateMemberInput = Partial<CreateMemberInput>
+
+export type Role = 'ADMIN' | 'EDITOR' | 'VIEWER'
+
+declare module 'next-auth' {
+  interface Session {
+    user: {
+      id: number
+      dni: string
+      name: string
+      role: Role
+    }
+  }
+}
+
+declare module '@auth/core/jwt' {
+  interface JWT {
+    id: number
+    dni: string
+    role: Role
+  }
+}

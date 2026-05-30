@@ -1,5 +1,4 @@
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import { LoginForm } from '@/features/auth/components/login-form'
 import Link from 'next/link'
 
 export default function LoginPage() {
@@ -17,27 +16,9 @@ export default function LoginPage() {
 
         {/* Card */}
         <div className="rounded-2xl border border-slate-200 bg-white px-8 py-8 shadow-sm">
-          <h2 className="mb-6 text-base font-semibold text-slate-800">
-            Iniciar sesión
-          </h2>
+          <h2 className="mb-6 text-base font-semibold text-slate-800">Iniciar sesión</h2>
 
-          <form className="space-y-4" noValidate>
-            <Input
-              label="DNI"
-              type="text"
-              placeholder="Ingresa tu DNI"
-              autoComplete="username"
-            />
-            <Input
-              label="Contraseña"
-              type="password"
-              placeholder="Ingresa tu contraseña"
-              autoComplete="current-password"
-            />
-            <Button type="submit" className="mt-2 w-full" size="lg">
-              Ingresar
-            </Button>
-          </form>
+          <LoginForm />
 
           <div className="mt-5 text-center">
             <Link
