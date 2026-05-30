@@ -49,5 +49,3 @@ next-env.d.ts
 .vscode/
 .idea/
 
-# PM2
-ecosystem.config.js
