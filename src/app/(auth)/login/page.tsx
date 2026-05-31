@@ -11,7 +11,7 @@ export default function LoginPage() {
             <span className="text-2xl font-bold text-white">VEC</span>
           </div>
           <h1 className="text-2xl font-bold text-slate-900">Vida en Cristo</h1>
-          <p className="mt-1 text-sm text-slate-500">Sistema de Administración 2</p>
+          <p className="mt-1 text-sm text-slate-500">Sistema de Administración</p>
         </div>
 
         {/* Card */}
