@@ -21,6 +21,7 @@ import {
 } from '@/components/ui/table'
 import { deleteMember } from '@/features/members/actions/members.actions'
 import type { Member } from '@/features/members/types'
+import { toTitleCase } from '@/lib/utils'
 import { Edit, Eye, Trash2, Users } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -74,7 +75,7 @@ export function MemberTable({ members }: MemberTableProps) {
           {members.map((member) => (
             <TableRow key={member.id}>
               <TableCell className="font-medium text-slate-900">
-                {member.firstName} {member.lastName}
+                {toTitleCase(member.firstName)} {toTitleCase(member.lastName)}
               </TableCell>
               <TableCell className="font-mono text-slate-500">{member.dni}</TableCell>
               <TableCell>{member.district?.name ?? '—'}</TableCell>

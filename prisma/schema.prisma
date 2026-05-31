@@ -72,6 +72,48 @@ model User {
   updatedAt DateTime @default(now()) @updatedAt
 }
 
+model Ministry {
+  id        Int           @id @default(autoincrement())
+  name      String        @unique
+  type      MinistryType  @default(ADULTS)
+  color     String        @default("#3b82f6")
+  isActive  Boolean       @default(true)
+  rooms     MinistryRoom[]
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @default(now()) @updatedAt
+}
+
+enum MinistryType {
+  ADULTS
+  CHILDREN
+}
+
+model MinistryRoom {
+  id          Int      @id @default(autoincrement())
+  name        String
+  ageRange    String?
+  ministryId  Int
+  ministry    Ministry @relation(fields: [ministryId], references: [id])
+  children    Child[]
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+}
+
+model Child {
+  id          Int          @id @default(autoincrement())
+  firstName   String
+  lastName    String
+  birthDate   DateTime?    @db.Date
+  tutorName   String
+  tutorPhone  String?
+  roomId      Int
+  room        MinistryRoom @relation(fields: [roomId], references: [id])
+  isActive    Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @default(now()) @updatedAt
+}
+
 model ApiUsage {
   id      Int    @id @default(autoincrement())
   service String

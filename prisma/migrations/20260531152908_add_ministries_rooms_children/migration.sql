@@ -1,0 +1,48 @@
+-- CreateTable
+CREATE TABLE `Ministry` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(191) NOT NULL,
+    `type` ENUM('ADULTS', 'CHILDREN') NOT NULL DEFAULT 'ADULTS',
+    `color` VARCHAR(191) NOT NULL DEFAULT '#3b82f6',
+    `isActive` BOOLEAN NOT NULL DEFAULT true,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    UNIQUE INDEX `Ministry_name_key`(`name`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `MinistryRoom` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(191) NOT NULL,
+    `ageRange` VARCHAR(191) NULL,
+    `ministryId` INTEGER NOT NULL,
+    `isActive` BOOLEAN NOT NULL DEFAULT true,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Child` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `firstName` VARCHAR(191) NOT NULL,
+    `lastName` VARCHAR(191) NOT NULL,
+    `birthDate` DATE NULL,
+    `tutorName` VARCHAR(191) NOT NULL,
+    `tutorPhone` VARCHAR(191) NULL,
+    `roomId` INTEGER NOT NULL,
+    `isActive` BOOLEAN NOT NULL DEFAULT true,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `MinistryRoom` ADD CONSTRAINT `MinistryRoom_ministryId_fkey` FOREIGN KEY (`ministryId`) REFERENCES `Ministry`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Child` ADD CONSTRAINT `Child_roomId_fkey` FOREIGN KEY (`roomId`) REFERENCES `MinistryRoom`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

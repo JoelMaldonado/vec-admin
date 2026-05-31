@@ -15,6 +15,7 @@ import { cn } from '@/lib/utils'
 import {
   BarChart2,
   Calendar,
+  Church,
   DollarSign,
   LayoutDashboard,
   LogOut,
@@ -35,6 +36,7 @@ interface NavItem {
 const navItems: NavItem[] = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/members', label: 'Miembros', icon: Users },
+  { href: '/ministerios', label: 'Ministerios', icon: Church },
   { href: '/events', label: 'Eventos', icon: Calendar },
   { href: '/finances', label: 'Finanzas', icon: DollarSign },
   { href: '/reports', label: 'Reportes', icon: BarChart2 },
