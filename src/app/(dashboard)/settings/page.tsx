@@ -1,4 +1,4 @@
-import { MapPin, Users } from 'lucide-react'
+import { MapPin, ShieldCheck, Users } from 'lucide-react'
 import Link from 'next/link'
 
 const sections = [
@@ -15,6 +15,13 @@ const sections = [
     label: 'Grupos Familiares',
     description: 'Gestiona los grupos familiares de la iglesia con su color identificador.',
     color: 'bg-purple-50 text-purple-600',
+  },
+  {
+    href: '/settings/users',
+    icon: ShieldCheck,
+    label: 'Usuarios',
+    description: 'Administra los usuarios del sistema, sus roles y accesos.',
+    color: 'bg-emerald-50 text-emerald-600',
   },
 ]
 

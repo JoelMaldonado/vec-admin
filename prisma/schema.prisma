@@ -31,7 +31,7 @@ model Member {
   isBaptized    Boolean   @default(false)
   isActive      Boolean   @default(true)
   createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  updatedAt     DateTime  @default(now()) @updatedAt
 }
 
 model FamilyGroup {
@@ -46,7 +46,7 @@ model FamilyGroup {
   longitude Decimal? @db.Decimal(11, 8)
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model District {
@@ -55,7 +55,7 @@ model District {
   color     String   @default("#3b82f6")
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
   members   Member[]
 }
 
@@ -69,7 +69,7 @@ model User {
   isActive  Boolean  @default(true)
   memberId  Int?     @unique
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model ApiUsage {
