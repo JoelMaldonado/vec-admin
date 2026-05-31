@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { Modal } from '@/components/ui/modal'
 import { createRoom, updateRoom } from '@/features/ministries/actions/ministries.actions'
 import type { MinistryRoom, CreateRoomInput } from '@/features/ministries/types'
@@ -49,23 +50,19 @@ export function RoomFormModal({ isOpen, onClose, ministryId, room }: RoomFormMod
   return (
     <Modal isOpen={isOpen} onClose={handleClose} title={room ? 'Editar salón' : 'Nuevo salón'}>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="mb-1.5 block text-sm font-medium text-slate-700">Nombre del salón</label>
-          <input
-            className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-            placeholder="Ej. Salón 1"
-            value={form.name}
-            onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-            required
-          />
-        </div>
+        <Input
+          label="Nombre del salón"
+          placeholder="Ej. Salón 1"
+          value={form.name}
+          onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
+          required
+        />
 
-        <div>
-          <label className="mb-1.5 block text-sm font-medium text-slate-700">
+        <div className="flex flex-col gap-1.5">
+          <label className="text-sm font-medium text-slate-700">
             Rango de edades <span className="text-slate-400">(opcional)</span>
           </label>
-          <input
-            className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+          <Input
             placeholder="Ej. 3-5 años"
             value={form.ageRange ?? ''}
             onChange={(e) => setForm((f) => ({ ...f, ageRange: e.target.value }))}

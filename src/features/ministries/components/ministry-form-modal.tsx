@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { Modal } from '@/components/ui/modal'
 import { createMinistry, updateMinistry } from '@/features/ministries/actions/ministries.actions'
 import type { Ministry, CreateMinistryInput } from '@/features/ministries/types'
@@ -51,22 +52,19 @@ export function MinistryFormModal({ isOpen, onClose, ministry }: MinistryFormMod
   return (
     <Modal isOpen={isOpen} onClose={handleClose} title={ministry ? 'Editar ministerio' : 'Nuevo ministerio'}>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="mb-1.5 block text-sm font-medium text-slate-700">Nombre</label>
-          <input
-            className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-            placeholder="Ej. ABC Niños"
-            value={form.name}
-            onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-            required
-          />
-        </div>
+        <Input
+          label="Nombre"
+          placeholder="Ej. ABC Niños"
+          value={form.name}
+          onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
+          required
+        />
 
         {!ministry && (
-          <div>
-            <label className="mb-1.5 block text-sm font-medium text-slate-700">Tipo</label>
+          <div className="flex flex-col gap-1.5">
+            <label className="text-sm font-medium text-slate-700">Tipo</label>
             <select
-              className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+              className="h-10 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-900 outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20"
               value={form.type}
               onChange={(e) => setForm((f) => ({ ...f, type: e.target.value as 'ADULTS' | 'CHILDREN' }))}
             >
@@ -76,8 +74,8 @@ export function MinistryFormModal({ isOpen, onClose, ministry }: MinistryFormMod
           </div>
         )}
 
-        <div>
-          <label className="mb-1.5 block text-sm font-medium text-slate-700">Color</label>
+        <div className="flex flex-col gap-1.5">
+          <label className="text-sm font-medium text-slate-700">Color</label>
           <div className="flex gap-2">
             {COLORS.map((c) => (
               <button

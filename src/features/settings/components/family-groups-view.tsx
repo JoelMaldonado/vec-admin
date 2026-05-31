@@ -250,7 +250,7 @@ export function FamilyGroupsView({ items, memberOptions, onCreate, onUpdate, onD
             <select
               value={form.leaderId}
               onChange={(e) => set('leaderId', e.target.value)}
-              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
             >
               <option value="">Sin líder asignado</option>
               {memberOptions.map((m) => (

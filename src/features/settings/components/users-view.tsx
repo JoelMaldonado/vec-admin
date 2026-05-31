@@ -170,7 +170,7 @@ export function UsersView({ users, onCreate, onUpdate, onDelete }: UsersViewProp
             <select
               value={form.role}
               onChange={(e) => set('role', e.target.value as Role)}
-              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
             >
               {ROLES.map((r) => <option key={r.value} value={r.value}>{r.label}</option>)}
             </select>

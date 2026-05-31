@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { Modal } from '@/components/ui/modal'
 import { createChild, updateChild } from '@/features/ministries/actions/ministries.actions'
 import type { Child, CreateChildInput } from '@/features/ministries/types'
@@ -53,35 +54,28 @@ export function ChildFormModal({ isOpen, onClose, roomId, child }: ChildFormModa
     <Modal isOpen={isOpen} onClose={handleClose} title={child ? 'Editar niño' : 'Agregar niño'}>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid grid-cols-2 gap-3">
-          <div>
-            <label className="mb-1.5 block text-sm font-medium text-slate-700">Nombre</label>
-            <input
-              className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-              placeholder="Juan"
-              value={form.firstName}
-              onChange={(e) => setForm((f) => ({ ...f, firstName: e.target.value }))}
-              required
-            />
-          </div>
-          <div>
-            <label className="mb-1.5 block text-sm font-medium text-slate-700">Apellido</label>
-            <input
-              className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-              placeholder="Pérez"
-              value={form.lastName}
-              onChange={(e) => setForm((f) => ({ ...f, lastName: e.target.value }))}
-              required
-            />
-          </div>
+          <Input
+            label="Nombre"
+            placeholder="Juan"
+            value={form.firstName}
+            onChange={(e) => setForm((f) => ({ ...f, firstName: e.target.value }))}
+            required
+          />
+          <Input
+            label="Apellido"
+            placeholder="Pérez"
+            value={form.lastName}
+            onChange={(e) => setForm((f) => ({ ...f, lastName: e.target.value }))}
+            required
+          />
         </div>
 
-        <div>
-          <label className="mb-1.5 block text-sm font-medium text-slate-700">
+        <div className="flex flex-col gap-1.5">
+          <label className="text-sm font-medium text-slate-700">
             Fecha de nacimiento <span className="text-slate-400">(opcional)</span>
           </label>
-          <input
+          <Input
             type="date"
-            className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
             value={form.birthDate ? new Date(form.birthDate).toISOString().split('T')[0] : ''}
             onChange={(e) =>
               setForm((f) => ({ ...f, birthDate: e.target.value ? new Date(e.target.value) : null }))
@@ -89,23 +83,19 @@ export function ChildFormModal({ isOpen, onClose, roomId, child }: ChildFormModa
           />
         </div>
 
-        <div>
-          <label className="mb-1.5 block text-sm font-medium text-slate-700">Nombre del tutor</label>
-          <input
-            className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-            placeholder="María Pérez"
-            value={form.tutorName}
-            onChange={(e) => setForm((f) => ({ ...f, tutorName: e.target.value }))}
-            required
-          />
-        </div>
+        <Input
+          label="Nombre del tutor"
+          placeholder="María Pérez"
+          value={form.tutorName}
+          onChange={(e) => setForm((f) => ({ ...f, tutorName: e.target.value }))}
+          required
+        />
 
-        <div>
-          <label className="mb-1.5 block text-sm font-medium text-slate-700">
+        <div className="flex flex-col gap-1.5">
+          <label className="text-sm font-medium text-slate-700">
             Teléfono del tutor <span className="text-slate-400">(opcional)</span>
           </label>
-          <input
-            className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+          <Input
             placeholder="999-123-456"
             value={form.tutorPhone ?? ''}
             onChange={(e) => setForm((f) => ({ ...f, tutorPhone: e.target.value }))}
