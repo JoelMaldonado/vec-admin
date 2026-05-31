@@ -31,7 +31,7 @@ export default function LoginPage() {
         </div>
 
         <p className="mt-6 text-center text-xs text-slate-400">
-          Iglesia Vida en Cristo &copy; {new Date().getFullYear()}
+          Iglesia Vida en Cristo &copy; {new Date().getFullYear()} &middot; v{process.env.NEXT_PUBLIC_APP_VERSION}
         </p>
       </div>
     </div>

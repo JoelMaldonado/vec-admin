@@ -30,7 +30,7 @@ export function LoginForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
       <Input
-        label="DNI 2"
+        label="DNI"
         type="text"
         placeholder="Ingresa tu DNI"
         autoComplete="username"
