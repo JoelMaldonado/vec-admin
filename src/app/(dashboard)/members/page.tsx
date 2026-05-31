@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/prisma'
 import { MemberStatsCards } from '@/features/members/components/member-stats'
 import { MembersView } from './_components/members-view'
-import { Plus } from 'lucide-react'
+import { Cake, Plus } from 'lucide-react'
 import Link from 'next/link'
 
 export default async function MembersPage() {
@@ -55,13 +55,22 @@ export default async function MembersPage() {
             Gestión del registro de miembros de la iglesia
           </p>
         </div>
-        <Link
-          href="/members/new"
-          className="inline-flex h-9 items-center gap-2 rounded-lg bg-blue-600 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-700"
-        >
-          <Plus className="h-4 w-4" />
-          Nuevo Miembro
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/members/birthdays"
+            className="inline-flex h-9 items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50"
+          >
+            <Cake className="h-4 w-4" />
+            Cumpleaños
+          </Link>
+          <Link
+            href="/members/new"
+            className="inline-flex h-9 items-center gap-2 rounded-lg bg-blue-600 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+          >
+            <Plus className="h-4 w-4" />
+            Nuevo Miembro
+          </Link>
+        </div>
       </div>
 
       <MemberStatsCards stats={stats} />

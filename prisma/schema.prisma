@@ -22,7 +22,7 @@ model Member {
   address       String?
   districtId    Int?
   district      District? @relation(fields: [districtId], references: [id])
-  birthDate     DateTime?
+  birthDate     DateTime? @db.Date
   maritalStatus String?
   gender        String
   familyGroupId  Int?
