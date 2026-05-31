@@ -20,15 +20,43 @@ model Member {
   dni           String    @unique
   phone         String?
   address       String?
-  district      String?
+  districtId    Int?
+  district      District? @relation(fields: [districtId], references: [id])
   birthDate     DateTime?
   maritalStatus String?
   gender        String
-  familyGroup   String?
+  familyGroupId  Int?
+  familyGroup    FamilyGroup?  @relation("FamilyGroupMembers", fields: [familyGroupId], references: [id])
+  leadingGroups  FamilyGroup[] @relation("FamilyGroupLeader")
   isBaptized    Boolean   @default(false)
   isActive      Boolean   @default(true)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+}
+
+model FamilyGroup {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  color     String   @default("#3b82f6")
+  leaderId  Int?
+  leader    Member?  @relation("FamilyGroupLeader", fields: [leaderId], references: [id])
+  members   Member[] @relation("FamilyGroupMembers")
+  address   String?
+  latitude  Decimal? @db.Decimal(10, 8)
+  longitude Decimal? @db.Decimal(11, 8)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model District {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  color     String   @default("#3b82f6")
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  members   Member[]
 }
 
 model User {
@@ -42,6 +70,15 @@ model User {
   memberId  Int?     @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model ApiUsage {
+  id      Int    @id @default(autoincrement())
+  service String
+  date    String // "YYYY-MM-DD"
+  count   Int    @default(0)
+
+  @@unique([service, date])
 }
 
 model PasswordResetToken {

@@ -1,3 +1,15 @@
+export interface DistrictRef {
+  id: number
+  name: string
+  color: string
+}
+
+export interface FamilyGroupRef {
+  id: number
+  name: string
+  color: string
+}
+
 export interface Member {
   id: number
   firstName: string
@@ -5,11 +17,13 @@ export interface Member {
   dni: string
   phone: string | null
   address: string | null
-  district: string | null
+  districtId: number | null
+  district: DistrictRef | null
   birthDate: Date | null
   maritalStatus: string | null
   gender: string
-  familyGroup: string | null
+  familyGroupId: number | null
+  familyGroup: FamilyGroupRef | null
   isBaptized: boolean
   isActive: boolean
   createdAt: Date
@@ -30,7 +44,7 @@ export interface MemberStats {
   familyGroups: number
 }
 
-export type CreateMemberInput = Omit<Member, 'id' | 'createdAt'>
+export type CreateMemberInput = Omit<Member, 'id' | 'createdAt' | 'district' | 'familyGroup'>
 
 export type UpdateMemberInput = Partial<CreateMemberInput>
 

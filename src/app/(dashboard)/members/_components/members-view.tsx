@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button'
 import { MemberFilters } from '@/features/members/components/member-filters'
 import { MemberTable } from '@/features/members/components/member-table'
-import type { Member, MemberFilters as MemberFiltersType } from '@/features/members/types'
+import type { DistrictRef, FamilyGroupRef, Member, MemberFilters as MemberFiltersType } from '@/features/members/types'
 import { DEFAULT_FILTERS } from '@/features/members/types'
 import { PAGE_SIZE } from '@/lib/constants'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
@@ -11,6 +11,8 @@ import { useMemo, useState } from 'react'
 
 interface MembersViewProps {
   members: Member[]
+  districts: DistrictRef[]
+  familyGroups: FamilyGroupRef[]
 }
 
 function applyFilters(members: Member[], filters: MemberFiltersType): Member[] {
@@ -19,8 +21,8 @@ function applyFilters(members: Member[], filters: MemberFiltersType): Member[] {
     const search = filters.search.toLowerCase().trim()
 
     if (search && !fullName.includes(search) && !m.dni.includes(search)) return false
-    if (filters.district && m.district !== filters.district) return false
-    if (filters.familyGroup && m.familyGroup !== filters.familyGroup) return false
+    if (filters.district && m.district?.name !== filters.district) return false
+    if (filters.familyGroup && m.familyGroup?.name !== filters.familyGroup) return false
     if (filters.gender && m.gender !== filters.gender) return false
     if (filters.isActive === 'true' && !m.isActive) return false
     if (filters.isActive === 'false' && m.isActive) return false
@@ -29,7 +31,7 @@ function applyFilters(members: Member[], filters: MemberFiltersType): Member[] {
   })
 }
 
-export function MembersView({ members }: MembersViewProps) {
+export function MembersView({ members, districts, familyGroups }: MembersViewProps) {
   const [filters, setFilters] = useState<MemberFiltersType>(DEFAULT_FILTERS)
   const [page, setPage] = useState(1)
 
@@ -49,7 +51,7 @@ export function MembersView({ members }: MembersViewProps) {
 
   return (
     <div className="space-y-4">
-      <MemberFilters filters={filters} onFiltersChange={handleFiltersChange} />
+      <MemberFilters filters={filters} districts={districts} familyGroups={familyGroups} onFiltersChange={handleFiltersChange} />
 
       <MemberTable members={paginated} />
 

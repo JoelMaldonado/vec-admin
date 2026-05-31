@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# VEC Admin
 
-## Getting Started
+Panel de administración para **Iglesia Vida en Cristo (VEC)**. Gestión de miembros, asistencia y reportes internos.
 
-First, run the development server:
+## Stack
+
+| Capa | Tecnología |
+|---|---|
+| Framework | Next.js 16 (App Router) |
+| Lenguaje | TypeScript 5 |
+| Estilos | Tailwind CSS v4 |
+| ORM | Prisma 7 + MariaDB/MySQL |
+| Auth | NextAuth v5 (beta) |
+| Formularios | React Hook Form + Zod v4 |
+| Data fetching | TanStack Query v5 |
+| Runtime gestor | PM2 |
+
+## Requisitos
+
+- Node.js ≥ 18
+- pnpm
+- MySQL / MariaDB en ejecución
+
+## Instalación
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Copia las variables de entorno y completa los valores:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+cp .env.example .env
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable | Descripción |
+|---|---|
+| `DATABASE_URL` | Cadena de conexión MySQL |
+| `AUTH_SECRET` | Secreto de NextAuth (`openssl rand -base64 32`) |
+| `NEXTAUTH_URL` | URL de la app en producción |
 
-## Learn More
+Aplica las migraciones y genera el cliente Prisma:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+pnpm prisma migrate deploy
+pnpm prisma generate
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Opcional — poblar datos iniciales:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+pnpm prisma db seed
+```
 
-## Deploy on Vercel
+## Desarrollo
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+pnpm dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Abre [http://localhost:3000](http://localhost:3000).
+
+## Producción
+
+```bash
+pnpm build
+pnpm start
+# o con PM2:
+pm2 start ecosystem.config.js
+```
+
+## Estructura del proyecto
+
+```
+src/
+├── app/
+│   ├── (auth)/           # Páginas públicas (login)
+│   ├── (dashboard)/      # Páginas protegidas (members, events, finances, reports, settings)
+│   └── api/              # Route Handlers REST
+├── features/             # Módulos de negocio (auth, members, dashboard, events, finances, reports, settings)
+├── components/           # UI compartida (ui/, layout/, shared/)
+├── lib/                  # Singletons: prisma, auth, utils, constants
+├── hooks/                # Hooks globales
+└── types/                # Tipos TypeScript derivados de Prisma
+```
+
+Ver [ARCHITECTURE.md](ARCHITECTURE.md) para convenciones detalladas.

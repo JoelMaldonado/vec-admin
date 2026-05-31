@@ -18,6 +18,7 @@ import {
   DollarSign,
   LayoutDashboard,
   LogOut,
+  Settings,
   Users,
   X,
 } from 'lucide-react'
@@ -37,6 +38,7 @@ const navItems: NavItem[] = [
   { href: '/events', label: 'Eventos', icon: Calendar },
   { href: '/finances', label: 'Finanzas', icon: DollarSign },
   { href: '/reports', label: 'Reportes', icon: BarChart2 },
+  { href: '/settings', label: 'Configuración', icon: Settings },
 ]
 
 interface SidebarProps {

@@ -62,7 +62,7 @@ export function MemberCard({ member }: MemberCardProps) {
             </Badge>
             {member.isBaptized && <Badge variant="success">Bautizado</Badge>}
             {member.familyGroup && (
-              <Badge variant="default">{member.familyGroup}</Badge>
+              <Badge variant="default">{member.familyGroup.name}</Badge>
             )}
           </div>
         </div>
@@ -108,12 +108,12 @@ export function MemberCard({ member }: MemberCardProps) {
             <DetailRow
               icon={MapPin}
               label="Distrito"
-              value={member.district ?? '—'}
+              value={member.district?.name ?? '—'}
             />
             <DetailRow
               icon={Users}
               label="Grupo Familiar"
-              value={member.familyGroup ?? '—'}
+              value={member.familyGroup?.name ?? '—'}
             />
             <DetailRow
               icon={Calendar}

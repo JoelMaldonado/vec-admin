@@ -77,8 +77,8 @@ export function MemberTable({ members }: MemberTableProps) {
                 {member.firstName} {member.lastName}
               </TableCell>
               <TableCell className="font-mono text-slate-500">{member.dni}</TableCell>
-              <TableCell>{member.district ?? '—'}</TableCell>
-              <TableCell>{member.familyGroup ?? '—'}</TableCell>
+              <TableCell>{member.district?.name ?? '—'}</TableCell>
+              <TableCell>{member.familyGroup?.name ?? '—'}</TableCell>
               <TableCell>
                 <Badge variant={member.isBaptized ? 'success' : 'default'}>
                   {member.isBaptized ? 'Sí' : 'No'}

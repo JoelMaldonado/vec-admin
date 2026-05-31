@@ -3,17 +3,17 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Select } from '@/components/ui/select'
-import { DEFAULT_FILTERS, type MemberFilters } from '@/features/members/types'
-import { DISTRICTS, FAMILY_GROUPS, GENDER_OPTIONS } from '@/lib/constants'
+import type { DistrictRef, FamilyGroupRef, MemberFilters } from '@/features/members/types'
+import { DEFAULT_FILTERS } from '@/features/members/types'
+import { GENDER_OPTIONS } from '@/lib/constants'
 import { X } from 'lucide-react'
 
 interface MemberFiltersProps {
   filters: MemberFilters
+  districts: DistrictRef[]
+  familyGroups: FamilyGroupRef[]
   onFiltersChange: (filters: MemberFilters) => void
 }
-
-const districtOptions = DISTRICTS.map((d) => ({ value: d, label: d }))
-const groupOptions = FAMILY_GROUPS.map((g) => ({ value: g, label: g }))
 const genderOptions = GENDER_OPTIONS.map((g) => ({ value: g, label: g }))
 const statusOptions = [
   { value: 'true', label: 'Activos' },
@@ -30,7 +30,10 @@ function hasActiveFilters(filters: MemberFilters): boolean {
   )
 }
 
-export function MemberFilters({ filters, onFiltersChange }: MemberFiltersProps) {
+export function MemberFilters({ filters, districts, familyGroups, onFiltersChange }: MemberFiltersProps) {
+  const districtOptions = districts.map((d) => ({ value: d.name, label: d.name }))
+  const groupOptions = familyGroups.map((g) => ({ value: g.name, label: g.name }))
+
   function update(partial: Partial<MemberFilters>) {
     onFiltersChange({ ...filters, ...partial })
   }
@@ -38,7 +41,7 @@ export function MemberFilters({ filters, onFiltersChange }: MemberFiltersProps) 
   return (
     <div className="rounded-xl border border-slate-200 bg-white p-4">
       <div className="flex flex-wrap items-end gap-3">
-        <div className="min-w-[220px] flex-1">
+        <div className="min-w-55 flex-1">
           <Input
             label="Buscar"
             placeholder="Nombre o DNI..."
@@ -47,7 +50,7 @@ export function MemberFilters({ filters, onFiltersChange }: MemberFiltersProps) 
           />
         </div>
 
-        <div className="w-[160px]">
+        <div className="w-40">
           <Select
             label="Distrito"
             placeholder="Todos"
@@ -57,7 +60,7 @@ export function MemberFilters({ filters, onFiltersChange }: MemberFiltersProps) 
           />
         </div>
 
-        <div className="w-[160px]">
+        <div className="w-40">
           <Select
             label="Grupo Familiar"
             placeholder="Todos"
@@ -67,7 +70,7 @@ export function MemberFilters({ filters, onFiltersChange }: MemberFiltersProps) 
           />
         </div>
 
-        <div className="w-[140px]">
+        <div className="w-35">
           <Select
             label="Género"
             placeholder="Todos"
@@ -77,7 +80,7 @@ export function MemberFilters({ filters, onFiltersChange }: MemberFiltersProps) 
           />
         </div>
 
-        <div className="w-[140px]">
+        <div className="w-35">
           <Select
             label="Estado"
             placeholder="Todos"

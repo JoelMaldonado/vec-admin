@@ -2,12 +2,18 @@
 
 import { createMember } from '@/features/members/actions/members.actions'
 import { MemberForm } from '@/features/members/components/member-form'
-import type { CreateMemberInput } from '@/features/members/types'
+import type { CreateMemberInput, DistrictRef, FamilyGroupRef } from '@/features/members/types'
 import { AlertCircle } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState, useTransition } from 'react'
 
-export function NewMemberForm() {
+interface NewMemberFormProps {
+  districts: DistrictRef[]
+  familyGroups: FamilyGroupRef[]
+  dniLookupRemaining: number
+}
+
+export function NewMemberForm({ districts, familyGroups, dniLookupRemaining }: NewMemberFormProps) {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const [serverError, setServerError] = useState<string | null>(null)
@@ -32,7 +38,7 @@ export function NewMemberForm() {
           {serverError}
         </div>
       )}
-      <MemberForm onSubmit={handleSubmit} isLoading={isPending} />
+      <MemberForm onSubmit={handleSubmit} districts={districts} familyGroups={familyGroups} dniLookupRemaining={dniLookupRemaining} isLoading={isPending} />
     </div>
   )
 }

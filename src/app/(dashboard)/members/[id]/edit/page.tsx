@@ -1,3 +1,4 @@
+import { getDniLookupUsage } from '@/features/members/actions/dni-lookup.action'
 import { prisma } from '@/lib/prisma'
 import { ChevronRight } from 'lucide-react'
 import Link from 'next/link'
@@ -10,25 +11,41 @@ export default async function EditMemberPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const member = await prisma.member.findUnique({
-    where: { id: Number(id) },
-    select: {
-      id: true,
-      firstName: true,
-      lastName: true,
-      dni: true,
-      phone: true,
-      address: true,
-      district: true,
-      birthDate: true,
-      maritalStatus: true,
-      gender: true,
-      familyGroup: true,
-      isBaptized: true,
-      isActive: true,
-      createdAt: true,
-    },
-  })
+
+  const [member, districts, familyGroups, { remaining }] = await Promise.all([
+    prisma.member.findUnique({
+      where: { id: Number(id) },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        dni: true,
+        phone: true,
+        address: true,
+        districtId: true,
+        district: { select: { id: true, name: true, color: true } },
+        familyGroupId: true,
+        familyGroup: { select: { id: true, name: true, color: true } },
+        birthDate: true,
+        maritalStatus: true,
+        gender: true,
+        isBaptized: true,
+        isActive: true,
+        createdAt: true,
+      },
+    }),
+    prisma.district.findMany({
+      where: { isActive: true },
+      orderBy: { name: 'asc' },
+      select: { id: true, name: true, color: true },
+    }),
+    prisma.familyGroup.findMany({
+      where: { isActive: true },
+      orderBy: { name: 'asc' },
+      select: { id: true, name: true, color: true },
+    }),
+    getDniLookupUsage(),
+  ])
 
   if (!member) notFound()
 
@@ -37,13 +54,9 @@ export default async function EditMemberPage({
   return (
     <div className="space-y-5">
       <nav className="flex items-center gap-1.5 text-sm text-slate-400">
-        <Link href="/members" className="hover:text-slate-600">
-          Miembros
-        </Link>
+        <Link href="/members" className="hover:text-slate-600">Miembros</Link>
         <ChevronRight className="h-3.5 w-3.5" />
-        <Link href={`/members/${member.id}`} className="hover:text-slate-600">
-          {fullName}
-        </Link>
+        <Link href={`/members/${member.id}`} className="hover:text-slate-600">{fullName}</Link>
         <ChevronRight className="h-3.5 w-3.5" />
         <span className="text-slate-600">Editar</span>
       </nav>
@@ -53,7 +66,7 @@ export default async function EditMemberPage({
         <p className="mt-1 text-sm text-slate-500">{fullName}</p>
       </div>
 
-      <EditMemberForm member={member} />
+      <EditMemberForm member={member} districts={districts} familyGroups={familyGroups} dniLookupRemaining={remaining} />
     </div>
   )
 }
