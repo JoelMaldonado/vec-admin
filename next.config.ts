@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  basePath: '/vec',
+  /* config options here */
 };
 
 export default nextConfig;
