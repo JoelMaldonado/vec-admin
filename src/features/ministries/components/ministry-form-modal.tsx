@@ -1,5 +1,6 @@
 'use client'
 
+import { Button } from '@/components/ui/button'
 import { Modal } from '@/components/ui/modal'
 import { createMinistry, updateMinistry } from '@/features/ministries/actions/ministries.actions'
 import type { Ministry, CreateMinistryInput } from '@/features/ministries/types'
@@ -96,20 +97,12 @@ export function MinistryFormModal({ isOpen, onClose, ministry }: MinistryFormMod
         {error && <p className="text-sm text-red-500">{error}</p>}
 
         <div className="flex justify-end gap-2 pt-1">
-          <button
-            type="button"
-            onClick={handleClose}
-            className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50"
-          >
+          <Button type="button" variant="secondary" onClick={handleClose}>
             Cancelar
-          </button>
-          <button
-            type="submit"
-            disabled={isPending}
-            className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-60"
-          >
-            {isPending ? 'Guardando...' : 'Guardar'}
-          </button>
+          </Button>
+          <Button type="submit" isLoading={isPending}>
+            Guardar
+          </Button>
         </div>
       </form>
     </Modal>

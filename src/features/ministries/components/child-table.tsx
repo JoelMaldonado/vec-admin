@@ -18,6 +18,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { Button } from '@/components/ui/button'
 import { deleteChild } from '@/features/ministries/actions/ministries.actions'
 import { ChildFormModal } from '@/features/ministries/components/child-form-modal'
 import type { Child } from '@/features/ministries/types'
@@ -63,12 +64,9 @@ export function ChildTable({ children, roomId }: ChildTableProps) {
         <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-slate-300 bg-white py-16 text-center">
           <Baby className="mb-3 h-10 w-10 text-slate-300" />
           <p className="text-sm font-medium text-slate-500">No hay niños en este salón</p>
-          <button
-            onClick={() => setNewOpen(true)}
-            className="mt-3 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
-          >
+          <Button className="mt-3" onClick={() => setNewOpen(true)}>
             Agregar niño
-          </button>
+          </Button>
         </div>
         <ChildFormModal isOpen={newOpen} onClose={() => setNewOpen(false)} roomId={roomId} />
       </>

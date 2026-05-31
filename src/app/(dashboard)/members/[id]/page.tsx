@@ -46,7 +46,7 @@ export default async function MemberDetailPage({
         </Link>
         <Link
           href={`/members/${member.id}/edit`}
-          className="inline-flex h-9 items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50"
+          className="inline-flex h-9 items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50"
         >
           <Edit className="h-4 w-4" />
           Editar
